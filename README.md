@@ -1,24 +1,11 @@
-# README
+# NBA Betting Statistics App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Purpose
+The purpose of this application is to consume API's that provide historical NBA statistics and use them to find trends and predict future outcomes for betting on NBA games. 
 
-Things you may want to cover:
+## Tech Stack
+Ruby on Rails
+PostgreSQL
 
-* Ruby version
+## Issues
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
