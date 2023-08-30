@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    # require 'pry'; binding.pry
   end
 
   def new
@@ -10,11 +9,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create(user_params)
-    # require 'pry'; binding.pry
     if @user.save
       session[:user_id] = @user.id 
       redirect_to user_path(@user)
     else
+      flash[:error] = "Invalid credentials. Please try again."
       redirect_to new_user_path
     end
   end
