@@ -1,0 +1,3 @@
+<h1>Welcome to your dashboard, <%= @user.username %>!</h1>
+<h2>Your email is <%= @user.email %></h2>
+<p>Need to change your profile? <%= link_to 'Edit Profile', edit_user_path(@user) %></p>
