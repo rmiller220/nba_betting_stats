@@ -1,4 +1,9 @@
 <h1>Welcome to the NBA betting stats app!</h1>
 <%# link_to 'Logout', logout_path, method: :delete %>
 <%# <%= link_to 'Login with Google', %> 
-<%= link_to 'Create New User', new_user_path %>
+<% if current_user %>
+  <%= link_to "Log Out" %>
+<% else %>
+  <%= link_to 'Create New User', new_user_path %>
+  <%= link_to 'Login with username or email', login_path %>
+<% end %>
