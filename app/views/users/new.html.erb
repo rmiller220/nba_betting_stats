@@ -1,5 +1,5 @@
 <h1>Create a new user profile</h1>
-<%= form_with model: @user, url: "/users/#{@user.id}", method: :post, local: true do |form| %>
+<%= form_with model: @user, url: { controller: 'users', action: 'create' }, method: :post, local: true do |form| %>
   <%= form.label :username %>
   <%= form.text_field :username %>
   <%= form.label :email %>
