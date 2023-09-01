@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def show
-    @user = User.find(params[:id])
+    @user = User.find(session[:user_id])
   end
 
   def new
@@ -22,9 +22,10 @@ class UsersController < ApplicationController
 
   end
 
-  def login
+  def login_user
       user = User.find_by(username: params[:username])
-    if user.authenticate(params[:password])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.username}!"
       redirect_to root_path
     else
@@ -33,8 +34,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout
+    session[:user_id] = nil
+    redirect_to root_path
+  end
+
   private
     def user_params
-      params.require(:user).permit(:username, :email, :password)
+      params.require(:user).permit(:username, :email, :password, :password_confirmation)
     end
 end
