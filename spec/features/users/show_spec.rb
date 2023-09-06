@@ -17,5 +17,11 @@ RSpec.describe "User show page" do
       expect(page).to have_content("Your email is #{@user1.email}")
       expect(page).to have_content("Need to change your profile?")
     end
+
+    it "sad path: I can't see a user's profile page if I'm not logged in" do
+      visit profile_path(@user1)
+
+      expect(page).to have_content("You must be logged in to view this page.")
+    end
   end
 end
