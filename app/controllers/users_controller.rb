@@ -3,9 +3,10 @@ class UsersController < ApplicationController
     if current_user
       @user = User.find(session[:user_id])
     else
-      flash[:error] = "You must be logged in to view this page."
+      flash[:error] = "Only the user can view their profile."
       redirect_to root_path
     end
+    
   end
 
   def new
