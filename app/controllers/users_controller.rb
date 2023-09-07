@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   def show
     if current_user
       @user = User.find(params[:format])
-      # require 'pry'; binding.pry
       if current_user.id == @user.id
         @user = User.find(session[:user_id])
       else
