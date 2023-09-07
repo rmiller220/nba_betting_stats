@@ -2,11 +2,16 @@ class UsersController < ApplicationController
   def show
     if current_user
       @user = User.find(session[:user_id])
+      if current_user.id == @user.id
+        @user = User.find(session[:user_id])
+      else
+        flash[:error] = "Only the user can view their profile."
+        redirect_to root_path
+      end
     else
       flash[:error] = "Only the user can view their profile."
       redirect_to root_path
     end
-    
   end
 
   def new
