@@ -29,6 +29,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find(params[:format])
+    if current_user.id == @user.id
+      # @user = User.find(session[:user_id])
+    else
+      flash[:error] = "Only the user can view their profile."
+      redirect_to root_path
+    end
+  end
+
+  def update
+    @user = User.find(params[:format])
+    if current_user.id == @user.id
+      if @user.update(user_params)
+        flash[:success] = "Your profile has been updated." 
+      else
+        flash[:error] = "Please fill in all fields."
+      end
+    else 
+      flash[:error] = "Only the user can view their profile."
+    end
+  end
+
   def login_form
 
   end
