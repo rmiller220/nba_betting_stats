@@ -1,1 +1,10 @@
 <h1>Edit your profile</h1>
+<%= form_with model: @user, url: { controller: 'users', action: 'update' }, method: :patch, local: true do |form| %>
+  <%= form.label :username %>
+  <%= form.text_field :username %>
+  <%= form.label :email %>
+  <%= form.text_field :email %>
+  <%= form.submit "Update Your Profile" %>
+<% end %>
+
+<p>Need to change your password? <%# link_to "Change Password", edit_password_path(@user) %></p>
