@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   post '/login', to: 'users#login_user'
   delete '/logout', to: "users#logout"
   get '/edit_profile', to: "users#edit"
-  patch '/edit_profile', to: "users#update"
+  patch '/profile', to: "users#update"
 end
