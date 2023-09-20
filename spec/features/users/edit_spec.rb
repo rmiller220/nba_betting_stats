@@ -16,15 +16,21 @@ RSpec.describe "User edit page" do
     it "I can see the edit my profile page" do
       expect(current_path).to eq(edit_profile_path(@user1))
       expect(page).to have_content("Edit your profile")
-      expect(page).to have_field(:username)
-      expect(page).to have_field(:email)
-      expect(page).to have_button("Update Profile")
+      expect(page).to have_field(:user_username)
+      expect(page).to have_field(:user_email)
+      expect(page).to have_button("Update Your Profile")
       expect(page).to have_content("Need to change your password?")
     end
     
     it "I can update my profile" do
-      fill_in :username, with: "new_test"
-      fill_in :email, with: "new_test@new_test.com"
+      fill_in :user_username, with: "new_test"
+      fill_in :user_email, with: "new_test@new_test.com"
+      click_button "Update Your Profile"
+
+      expect(current_path).to eq(profile_path(@user1))
+      expect(page).to have_content("Your profile has been updated.")
+      expect(page).to have_content("Welcome to your dashboard, new_test!")
+      expect(page).to have_content("Your email is new_test@new_test.com")
     end
   end
 end
