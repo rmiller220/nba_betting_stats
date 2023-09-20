@@ -46,6 +46,7 @@ class UsersController < ApplicationController
     if current_user.id == @user.id
       if @user.update(user_params)
         flash[:success] = "Your profile has been updated." 
+        redirect_to profile_path(@user)
       else
         flash[:error] = "Please fill in all fields."
       end
@@ -66,7 +67,7 @@ class UsersController < ApplicationController
       redirect_to root_path
     else
       flash[:error] = "Sorry, your credentials are bad."
-      render :login_form
+      redirect_to login_path
     end
   end
 
