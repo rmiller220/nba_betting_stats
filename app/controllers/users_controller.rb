@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   def show
     if current_user
-      # @user = User.find(session[:user_id])
+      @user = User.find(session[:user_id])
       # require 'pry'; binding.pry
       # @correct_user = User.find(params[:id])
-      @user = User.find(params[:format])
+      # @user = User.find(params[:format])
       if current_user.id == @user.id
       else
         flash[:error] = "Only the user can view their profile."
