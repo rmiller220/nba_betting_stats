@@ -1,5 +1,5 @@
 <h1>Edit your profile</h1>
-<%= form_with model: @user, url: { controller: 'users', action: 'update' }, method: :patch, local: true do |form| %>
+<%= form_with model: @user, url: profile_path(@user), method: :patch, local: true do |form| %>
   <%= form.label :username %>
   <%= form.text_field :username %>
   <%= form.label :email %>
