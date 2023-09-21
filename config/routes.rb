@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
+  root to: 'welcome#index'
   resources :users, only: [:new, :create]
   get '/profile', to: 'users#show'
-  root to: 'welcome#index'
   get 'login', to: "users#login_form"
   post '/login', to: 'users#login_user'
   delete '/logout', to: "users#logout"
