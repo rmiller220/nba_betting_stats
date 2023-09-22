@@ -53,6 +53,8 @@ gem 'faraday'
 # gem 'omniauth-google-oauth2'
 gem 'httparty'
 gem 'nokogiri'
+gem 'watir'
+gem 'webdrivers'
 
 
 group :development, :test do
@@ -84,6 +86,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   # gem "capybara"
   gem "selenium-webdriver"
-  gem "webdrivers"
   gem "simplecov"
 end
