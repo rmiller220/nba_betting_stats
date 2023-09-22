@@ -53,6 +53,8 @@ gem 'faraday'
 # gem 'omniauth-google-oauth2'
 gem 'httparty'
 gem 'nokogiri'
+gem 'open-uri'
+gem 'csv'
 gem 'watir'
 gem 'webdrivers'
 
