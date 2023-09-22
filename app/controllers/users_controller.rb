@@ -2,9 +2,6 @@ class UsersController < ApplicationController
   def show
     if current_user
       @user = User.find(session[:user_id])
-      # require 'pry'; binding.pry
-      # @correct_user = User.find(params[:id])
-      # @user = User.find(params[:format])
       if current_user.id == @user.id
       else
         flash[:error] = "Only the user can view their profile."
@@ -44,17 +41,25 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:format])
     if current_user.id == @user.id
-      if @user.update(user_params)
+      require 'pry'; binding.pry
+      if @user.update(user_params) #&& !@user.update(user_params)
+        require 'pry'; binding.pry
+        # @user.update(user_params)
+        current_user.update(user_params_edit) && !current_user.update(user_params)
+        # require 'pry'; binding.pry
         flash[:success] = "Your profile has been updated." 
         redirect_to profile_path(@user)
+        # require 'pry'; binding.pry
+        # render :show
       else
         flash[:error] = "Please fill in all fields."
+        redirect_to edit_profile_path(@user)
       end
     else 
       flash[:error] = "Only the user can view their profile."
     end
   end
-
+  
   def login_form
 
   end
@@ -77,6 +82,13 @@ class UsersController < ApplicationController
   end
 
   private
+    def user_params_edit
+      params.permit(:username, :email)
+    end
+    # def user_params_edit
+    #   require 'pry'; binding.pry
+    #   params.require(:user).permit(:username, :email)
+    # end
     def user_params
       params.require(:user).permit(:username, :email, :password, :password_confirmation)
     end
