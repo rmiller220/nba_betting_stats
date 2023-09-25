@@ -57,6 +57,7 @@ gem 'open-uri'
 gem 'csv'
 gem 'watir'
 gem 'webdrivers'
+gem 'selenium-webdriver'
 
 
 group :development, :test do
