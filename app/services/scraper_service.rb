@@ -172,13 +172,23 @@ require 'watir'
 class ScraperService
   def self.scrape_and_save_data
     # Create a new Watir browser instance
-    browser = Watir::Browser.new
+    # browser = Watir::Browser.new
+    retry_attempts = 3 # Number of retry attempts
+    retry_delay = 5 # Delay between retries (in seconds)
 
+    # Retry loop
+    retry_attempts.times do |attempt|
+      begin
+         # Set the Watir default timeout (adjust as needed)
+         Watir.default_timeout = 60
+
+        # Create a new Watir browser instance with an increased timeout
+        browser = Watir::Browser.new
     # Navigate to the NBA stats page
     browser.goto('https://www.nba.com/stats/players/boxscores')
 
     # Click the dropdown menu and select "All"
-    sleep(15) # You might need to adjust this sleep time
+    sleep(30) # You might need to adjust this sleep time
     close_button = browser.button(aria_label: 'Close')
     close_button.click if close_button.present?
     # sleep(15)
@@ -199,6 +209,11 @@ class ScraperService
     # Wait for the page to load (you may need to adjust the wait time)
 
     # Locate the section containing the dropdown
+    # Click the "Decline Offer" button
+    if browser.button(aria_label: 'Decline Offer').present?
+      browser.button(aria_label: 'Decline Offer').click
+    # You can add a sleep here to give the action time to complete if needed
+    end
     dropdown_section = browser.section(class: 'Block_block__62M07 nba-stats-content-block')
 
     # Find the dropdown element within the section
@@ -206,9 +221,8 @@ class ScraperService
     dropdown_element.wait_until(&:present?)
 
     # Select the option with value "-1" (All)
-    dropdown_element.select_value('-1')
-    sleep(15)
-
+    dropdown_element.select('-1')
+    sleep(30)
     # Get the HTML source of the page
     page_source = browser.html
 
@@ -249,7 +263,15 @@ class ScraperService
 
     # Close the browser
     browser.close
-
     csv_file_path # Return the path to the saved CSV file
+    break # Exit the loop if successful
+      rescue Net::ReadTimeout
+        puts "Retry attempt #{attempt + 1} due to timeout..."
+        sleep(retry_delay)
+      ensure
+    # Ensure the browser is closed even if there's an exception
+    browser&.close
+    end
   end
+end
 end
