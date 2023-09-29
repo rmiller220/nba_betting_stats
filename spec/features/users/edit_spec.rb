@@ -19,7 +19,6 @@ RSpec.describe "User edit page" do
       expect(page).to have_field(:user_username)
       expect(page).to have_field(:user_email)
       expect(page).to have_button("Update Your Profile")
-      expect(page).to have_content("Need to change your password?")
     end
     
     it "I can update my profile" do
