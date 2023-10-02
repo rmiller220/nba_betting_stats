@@ -173,12 +173,12 @@ class ScraperService
   def self.scrape_and_save_data
     # Create a new Watir browser instance
     # browser = Watir::Browser.new
-    retry_attempts = 3 # Number of retry attempts
-    retry_delay = 5 # Delay between retries (in seconds)
+    # retry_attempts = 3 # Number of retry attempts
+    # retry_delay = 5 # Delay between retries (in seconds)
 
     # Retry loop
-    retry_attempts.times do |attempt|
-      begin
+    # retry_attempts.times do |attempt|
+    #   begin
          # Set the Watir default timeout (adjust as needed)
          Watir.default_timeout = 60
 
@@ -186,46 +186,46 @@ class ScraperService
         browser = Watir::Browser.new
     # Navigate to the NBA stats page
     browser.goto('https://www.nba.com/stats/players/boxscores')
-
-    # Click the dropdown menu and select "All"
+    
     sleep(30) # You might need to adjust this sleep time
+    if browser.button(aria_label: 'Decline Offer; close the dialog').present?
+      browser.button(aria_label: 'Decline Offer; close the dialog').click
+      sleep(10) # You might need to adjust this sleep time
+      # You can add a sleep here to give the action time to complete if needed
+    end
+    if browser.button(aria_label: 'No Thanks').present?
+      browser.button(aria_label: 'No Thanks').click
+      sleep(10) # You might need to adjust this sleep time
+      # You can add a sleep here to give the action time to complete if needed
+    end
+
     close_button = browser.button(aria_label: 'Close')
     close_button.click if close_button.present?
-    # sleep(15)
-    # Locate and interact with the dropdown element
-# dropdown = browser.select(css: "#__next > div.Layout_base__6IeUC.Layout_justNav__2H4H0.Layout_withSubNav__ByKRF > div.Layout_mainContent__jXliI > div.MaxWidthContainer_mwc__ID5AG > section.Block_block__62M07.nba-stats-content-block > div > div.Crom_base__f0niE > div.Crom_cromSettings__ak6Hd > div.Pagination_content__f2at7.Crom_cromSetting__Tqtiq > div.Pagination_pageDropdown__KgjBU > div > label > div > select")
-# document.querySelector("#__next > div.Layout_base__6IeUC.Layout_justNav__2H4H0.Layout_withSubNav__ByKRF > div.Layout_mainContent__jXliI > div.MaxWidthContainer_mwc__ID5AG > section.Block_block__62M07.nba-stats-content-block > div > div.Crom_base__f0niE > div.Crom_cromSettings__ak6Hd > div.Pagination_content__f2at7.Crom_cromSetting__Tqtiq > div.Pagination_pageDropdown__KgjBU > div > label > div > select > option:nth-child(1)").click();
-
-    # select_element = browser.select(class: 'DropDown_select__4pIg9')
-    # select_element.wait_until(&:present?)
-
-    # select_element.select('-1') # Select by value, not name
-    # dropdown_container = browser.divs(class: 'DropDown_content__Bsm3h')[0]
-    # select_element = browser.select(class: 'DropDown_select__4pIg9')
-    # select_element.wait_until(&:present?)
-  
-    # Find the option with value "-1" (All) and select it
-    # select_element.option(value: '-1').select
-    # Wait for the page to load (you may need to adjust the wait time)
-
-    # Locate the section containing the dropdown
+    sleep(30) # You might need to adjust this sleep time
     # Click the "Decline Offer" button
-    if browser.button(aria_label: 'Decline Offer').present?
-      browser.button(aria_label: 'Decline Offer').click
-    # You can add a sleep here to give the action time to complete if needed
-    end
     dropdown_section = browser.section(class: 'Block_block__62M07 nba-stats-content-block')
-
+    
     # Find the dropdown element within the section
     dropdown_element = dropdown_section.select_list(css: '.DropDown_select__4pIg9')
     dropdown_element.wait_until(&:present?)
-
+    
     # Select the option with value "-1" (All)
     dropdown_element.select('-1')
-    sleep(30)
+    sleep(60)
+    if browser.button(aria_label: 'Decline Offer; close the dialog').present?
+      browser.button(aria_label: 'Decline Offer; close the dialog').click
+      sleep(10) # You might need to adjust this sleep time
+      # You can add a sleep here to give the action time to complete if needed
+    end
+    if browser.button(aria_label: 'No Thanks').present?
+      browser.button(aria_label: 'No Thanks').click
+      sleep(10) # You might need to adjust this sleep time
+      # You can add a sleep here to give the action time to complete if needed
+    end
+    sleep(30) # You might need to adjust this sleep time
     # Get the HTML source of the page
     page_source = browser.html
-
+    require 'pry'; binding.pry
     # Parse the HTML source with Nokogiri
     doc = Nokogiri::HTML(page_source)
 
@@ -264,14 +264,14 @@ class ScraperService
     # Close the browser
     browser.close
     csv_file_path # Return the path to the saved CSV file
-    break # Exit the loop if successful
-      rescue Net::ReadTimeout
-        puts "Retry attempt #{attempt + 1} due to timeout..."
-        sleep(retry_delay)
-      ensure
-    # Ensure the browser is closed even if there's an exception
-    browser&.close
+    # break # Exit the loop if successful
+    #   rescue Net::ReadTimeout
+    #     puts "Retry attempt #{attempt + 1} due to timeout..."
+    #     sleep(retry_delay)
+    #   ensure
+    # # Ensure the browser is closed even if there's an exception
+    # browser&.close
     end
   end
-end
-end
+# end
+# end
