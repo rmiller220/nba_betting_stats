@@ -187,21 +187,29 @@ class ScraperService
     # Navigate to the NBA stats page
     browser.goto('https://www.nba.com/stats/players/boxscores')
     
-    sleep(30) # You might need to adjust this sleep time
-    if browser.button(aria_label: 'Decline Offer; close the dialog').present?
+    sleep(20) # You might need to adjust this sleep time
+    if
+     browser.button(aria_label: 'Decline Offer; close the dialog').present?
       browser.button(aria_label: 'Decline Offer; close the dialog').click
       sleep(10) # You might need to adjust this sleep time
-      # You can add a sleep here to give the action time to complete if needed
     end
-    if browser.button(aria_label: 'No Thanks').present?
-      browser.button(aria_label: 'No Thanks').click
+      # You can add a sleep here to give the action time to complete if needed
+      # You can add a sleep here to give the action time to complete if needed
+      
+      if
+     browser.button(aria_label: 'No Thanks; close the dialog').present?
+      browser.button(aria_label: 'No Thanks; close the dialog').click
       sleep(10) # You might need to adjust this sleep time
-      # You can add a sleep here to give the action time to complete if needed
-    end
-
-    close_button = browser.button(aria_label: 'Close')
-    close_button.click if close_button.present?
-    sleep(30) # You might need to adjust this sleep time
+      end
+      
+      close_button = browser.button(aria_label: 'Close')
+      close_button.click if close_button.present?
+      sleep(30) # You might need to adjust this sleep time
+      if
+     browser.button(aria_label: 'No Thanks; close the dialog').present?
+      browser.button(aria_label: 'No Thanks; close the dialog').click
+      sleep(5) # You might need to adjust this sleep time
+      end
     # Click the "Decline Offer" button
     dropdown_section = browser.section(class: 'Block_block__62M07 nba-stats-content-block')
     
@@ -211,14 +219,14 @@ class ScraperService
     
     # Select the option with value "-1" (All)
     dropdown_element.select('-1')
-    sleep(60)
+    sleep(180)
     if browser.button(aria_label: 'Decline Offer; close the dialog').present?
       browser.button(aria_label: 'Decline Offer; close the dialog').click
       sleep(10) # You might need to adjust this sleep time
       # You can add a sleep here to give the action time to complete if needed
     end
-    if browser.button(aria_label: 'No Thanks').present?
-      browser.button(aria_label: 'No Thanks').click
+    if browser.button(aria_label: 'No Thanks; close the dialog').present?
+      browser.button(aria_label: 'No Thanks; close the dialog').click
       sleep(10) # You might need to adjust this sleep time
       # You can add a sleep here to give the action time to complete if needed
     end
